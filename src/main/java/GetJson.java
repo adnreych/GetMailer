@@ -22,7 +22,7 @@ public class GetJson {
 		} catch (IOException e) {
 			e.printStackTrace();
 			return "IOException";
-		} // нормально обработать исключение
+		} // bad catch
 
 	}
 

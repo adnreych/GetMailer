@@ -16,7 +16,7 @@ public class GetMail {
 
 	GetJson gj = new GetJson();
 
-	Pattern pattern = Pattern.compile("\\w+-@\\w+-*\\.[a-z]+", Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
+	Pattern pattern = Pattern.compile("[\\w-]+@[\\w-]+\\.[a-z]+", Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
 
 	public ArrayList<String> siteDomains = new ArrayList<String>();
 
@@ -25,10 +25,7 @@ public class GetMail {
 			String s = gj.getUrl(q);
 			siteDomains.add(s.substring(1, s.length() - 1)); // delete "" in JSON request
 		}
-	} // оптимизировать регулярку
-		// проверить что быстрее делается - обработка по одному значению
-		// последовательно, или
-		// сначала собираем URL-адреса, а потом ищем почты
+	}
 
 	private LinkedHashSet<String> emails = new LinkedHashSet<>();
 
@@ -46,21 +43,6 @@ public class GetMail {
 			}
 		}
 		System.out.println(emails);
-	}
-
-	public static void main(String[] args) {
-		ArrayList<StringBuilder> input = new ArrayList<StringBuilder>();
-		input.add(new StringBuilder("rush agency")); // не обрабатывает, возможно потому что не все жрет
-		input.add(new StringBuilder("irobot-crimea")); // не обрабатывает, т.к. api не находит сайт
-		input.add(new StringBuilder("экмус"));
-		input.add(new StringBuilder("экоумвельт"));
-		input.add(new StringBuilder("течпорт"));
-		// input.add(new StringBuilder("30-06")); //не обрабатывает
-		GetMail gm = new GetMail();
-		gm.setQuery(input);
-		gm.fillSiteDomains();
-		// System.out.println(gm.siteDomains);
-		gm.getMail();
 	}
 
 }
