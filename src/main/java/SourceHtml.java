@@ -42,15 +42,23 @@ public class SourceHtml {
 				reader.close();
 			} catch (SSLHandshakeException e) {
 				// e.printStackTrace();
-				if (url.getHost().contains("www."))
-					this.url = new URL("http://" + url.getHost().substring(4));
-				else
-					this.url = new URL("http://www" + url.getHost());
+				SSLHandshakeHandler();
 				makeSourceHtml();
 
 			}
 		} catch (IOException e) {
-			// e.printStackTrace();
+			e.printStackTrace();
+		}
+	}
+
+	void SSLHandshakeHandler() {
+		try {
+			if (url.getHost().contains("www."))
+				this.url = new URL("http://" + url.getHost().substring(4));
+			else
+				this.url = new URL("http://www" + url.getHost());
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
