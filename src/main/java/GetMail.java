@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class GetMail {
-	private GetJson gj = new GetJson();
+	private SearchUrl gj = new SearchUrl();
 	private Pattern pattern = Pattern.compile("[\\w-]+@[\\w-]+\\.[a-z]+", Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
 	private Pattern innerPattern = Pattern.compile("[A-Za-z\\.]+(?=\">Контакты<)",
 			Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
@@ -30,8 +30,8 @@ public class GetMail {
 
 	private String getInnerPage(StringBuilder domain) {
 		String inner = "Страница Контакты не найдена";
-		SourceHtml siteSource = new SourceHtml(new StringBuilder(domain));
-		StringBuilder source = siteSource.getSourceHtml();
+		MakeHtml siteSource = new MakeHtml(new StringBuilder(domain));
+		StringBuilder source = siteSource.getHtml();
 		Matcher innerMatcher = innerPattern.matcher(source.toString());
 		while (innerMatcher.find())
 			inner = source.substring(innerMatcher.start(), innerMatcher.end());
@@ -39,8 +39,8 @@ public class GetMail {
 	}
 
 	private void searchMails(String domain) {
-		SourceHtml siteSource = new SourceHtml(new StringBuilder(domain));
-		StringBuilder source = siteSource.getSourceHtml();
+		MakeHtml siteSource = new MakeHtml(new StringBuilder(domain));
+		StringBuilder source = siteSource.getHtml();
 		Matcher matcher = pattern.matcher(source);
 		while (matcher.find()) {
 			try {
@@ -66,4 +66,11 @@ public class GetMail {
 		System.out.println(notFound);
 	}
 
+	public static void main(String[] args) {
+		ArrayList<StringBuilder> input = new ArrayList<StringBuilder>();
+		input.add(new StringBuilder("эльдорадо"));
+		GetMail gm = new GetMail(input);
+		gm.getMail();
+
+	}
 }

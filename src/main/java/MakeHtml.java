@@ -7,19 +7,19 @@ import java.net.URL;
 
 import javax.net.ssl.SSLHandshakeException;
 
-public class SourceHtml {
+public class MakeHtml {
 
-	public StringBuilder sourceHtml = new StringBuilder();
+	public StringBuilder html = new StringBuilder();
 	public URL url;
 	public HttpURLConnection urlConn;
 	public BufferedReader reader;
 
-	public StringBuilder getSourceHtml() {
-		this.makeSourceHtml();
-		return sourceHtml;
+	public StringBuilder getHtml() {
+		this.makeHtml();
+		return html;
 	}
 
-	SourceHtml(StringBuilder s) {
+	MakeHtml(StringBuilder s) {
 		try {
 			this.url = new URL(s.toString());
 		} catch (IOException e) {
@@ -27,7 +27,7 @@ public class SourceHtml {
 		}
 	}
 
-	public void makeSourceHtml() {
+	public void makeHtml() {
 		try {
 			if (this.isRedirected()) {
 				this.protocolHandler();
@@ -37,13 +37,13 @@ public class SourceHtml {
 				String line;
 				while ((line = reader.readLine()) != null) {
 					StringBuilder ln = new StringBuilder(line);
-					sourceHtml.append(ln + "\n");
+					html.append(ln + "\n");
 				}
 				reader.close();
 			} catch (SSLHandshakeException e) {
 				// e.printStackTrace();
 				SSLHandshakeHandler();
-				makeSourceHtml();
+				makeHtml();
 
 			}
 		} catch (IOException e) {
